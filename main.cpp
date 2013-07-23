@@ -18,6 +18,7 @@ public:
 	binarySearchTree(T data);
 	treeNode<T> * getHead() {return head;};
 	void print(int depth, treeNode<T> *root_ptr);
+	void inorderTraverse(treeNode<T> *root_ptr);
 	treeNode<T> * treeSearch(T searchData);
 	void addNode(T addData);
 };
@@ -43,6 +44,17 @@ void binarySearchTree<T>::print(int depth, treeNode<T> *root_ptr) {
 		print(depth+1, root_ptr->right_ptr);
 	};
 };
+
+template <class T>
+void binarySearchTree<T>::inorderTraverse(treeNode<T> *root_ptr) {
+	if (root_ptr->left_ptr) {
+		inorderTraverse(root_ptr->left_ptr);
+	};
+	cout << root_ptr->data << " ";
+	if (root_ptr->right_ptr) {
+		inorderTraverse(root_ptr->right_ptr);
+	};
+}
 
 template <class T>
 treeNode<T> * binarySearchTree<T>::treeSearch(T searchData) {
@@ -84,5 +96,6 @@ int main () {
 	myTree.addNode(13);
 	myTree.addNode(16);
 	myTree.print(0, myTree.getHead());
+	myTree.inorderTraverse(myTree.getHead());
     return 0;
 };
