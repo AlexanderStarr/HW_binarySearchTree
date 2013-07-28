@@ -2,6 +2,8 @@
 #include <string>
 using namespace std;
 
+// Each tree node needs a left pointer and a right pointer.
+// Also I use templates so it can handle any data type.
 template <class T>
 struct treeNode {
 	T data;
@@ -30,6 +32,8 @@ binarySearchTree<T>::binarySearchTree(T data) {
 	size = 1;
 };
 
+// The print function is really just a preorder traversal, with
+// preceeding tabs to indicate the depth of the node.
 template <class T>
 void binarySearchTree<T>::print(int depth, treeNode<T> *root_ptr) {
 	for (int i=0; i<depth; i++) {
@@ -37,11 +41,15 @@ void binarySearchTree<T>::print(int depth, treeNode<T> *root_ptr) {
 	};
 	if (root_ptr) {
 		cout << root_ptr->data << endl;
+		
+		// It should only print the children if there is at least one.
 		if (root_ptr->left_ptr || root_ptr->right_ptr) {
 			print(depth+1, root_ptr->left_ptr);
 			print(depth+1, root_ptr->right_ptr);
 		}
 	}
+	// Because the order of the nodes is important, NULL should be
+	// displayed for missing nodes, so that the order is unambiguous.
 	else {
 		cout << "NULL" << endl;
 	}
@@ -59,8 +67,12 @@ void binarySearchTree<T>::inorderTraverse(treeNode<T> *root_ptr) {
 	};
 }
 
+// This either returns the element containing searchData, or the node
+// which should be the parent of searchData.
 template <class T>
 treeNode<T> * binarySearchTree<T>::treeSearch(T searchData) {
+	// It keeps track of the current AND previous node in case
+	// searchData is not found.
 	treeNode<T> *curr = head, *prev = head;
 	while (curr) {
 		if (searchData == curr->data) {
@@ -75,21 +87,35 @@ treeNode<T> * binarySearchTree<T>::treeSearch(T searchData) {
 			curr = prev->right_ptr;
 		}
 	}
+	// If searchData is not found, then this returns the node which
+	// is to be searchData's parent.
 	return prev;
 }
 
 template <class T>
 void binarySearchTree<T>::addNode(T addData) {
+	// First search for the data in the tree.
 	treeNode<T> *loc = treeSearch(addData);
+	
+	// Then create a new node for the data.
 	treeNode<T> *newNode = new treeNode<T>(addData, NULL, NULL);
+	
+	// loc might not be a node with the same data as newNode, so it must check.
+	// It assigns the proper pointer to newNode if the data is not equal.
+	// Otherwise, if the data is equal, it does nothing and frees the newNode memory.
 	if (newNode->data < loc->data) {
 		loc->left_ptr = newNode;
 	}
 	else if (newNode->data > loc->data) {
 		loc->right_ptr = newNode;
 	}
+	else {
+		delete newNode;
+	}
+
 };
 
+// This contains the code for the input and output of the tree.
 template <class T>
 void buildTree() {
 	cout << "Enter the root node: ";
