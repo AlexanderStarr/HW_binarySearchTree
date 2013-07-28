@@ -35,14 +35,17 @@ void binarySearchTree<T>::print(int depth, treeNode<T> *root_ptr) {
 	for (int i=0; i<depth; i++) {
 		cout << "\t";
 	};
-	cout << root_ptr->data << endl;
-	
-	if (root_ptr->left_ptr) {
-		print(depth+1, root_ptr->left_ptr);
-	};
-	if (root_ptr->right_ptr) {
-		print(depth+1, root_ptr->right_ptr);
-	};
+	if (root_ptr) {
+		cout << root_ptr->data << endl;
+		if (root_ptr->left_ptr || root_ptr->right_ptr) {
+			print(depth+1, root_ptr->left_ptr);
+			print(depth+1, root_ptr->right_ptr);
+		}
+	}
+	else {
+		cout << "NULL" << endl;
+	}
+
 };
 
 template <class T>
@@ -89,12 +92,9 @@ void binarySearchTree<T>::addNode(T addData) {
 
 int main () {
 	binarySearchTree<int> myTree = binarySearchTree<int>(10);
-	myTree.addNode(15);
 	myTree.addNode(5);
 	myTree.addNode(3);
 	myTree.addNode(6);
-	myTree.addNode(13);
-	myTree.addNode(16);
 	myTree.print(0, myTree.getHead());
 	myTree.inorderTraverse(myTree.getHead());
     return 0;
