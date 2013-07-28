@@ -91,11 +91,49 @@ void binarySearchTree<T>::addNode(T addData) {
 };
 
 int main () {
-	binarySearchTree<int> myTree = binarySearchTree<int>(10);
-	myTree.addNode(5);
-	myTree.addNode(3);
-	myTree.addNode(6);
-	myTree.print(0, myTree.getHead());
-	myTree.inorderTraverse(myTree.getHead());
-    return 0;
+	char type;
+	while (type != 'i' && type != 's') {
+		cout << "Please choose (s)tring or (i)nteger: ";
+		cin >> type;
+	}
+	cout << "Enter the root node: ";
+	char again = 'y';
+	if (type == 'i') {
+		int node;
+		cin >> node;
+		binarySearchTree<int> myTree = binarySearchTree<int>(node);
+		while (again == 'y') {
+			cout << "Enter the new node: ";
+			cin >> node;
+			myTree.addNode(node);
+			cout << "Add another? [y/n] ";
+			cin >> again;
+		}
+		cout << "Your tree is represented below:" << endl;
+		myTree.print(0, myTree.getHead());
+		cout << endl;
+		cout << "The inorder traversal of your tree yields:" << endl;
+		myTree.inorderTraverse(myTree.getHead());
+		
+	}
+	else if (type == 's') {
+		string node;
+		cin >> node;
+		binarySearchTree<string> myTree = binarySearchTree<string>(node);
+		while (again == 'y') {
+			cout << "Enter the new node: ";
+			string node;
+			cin >> node;
+			myTree.addNode(node);
+			cout << "Add another? [y/n] ";
+			cin >> again;
+		}
+		cout << "Your tree is represented below:" << endl;
+		myTree.print(0, myTree.getHead());
+		cout << endl;
+		cout << "The inorder traversal of your tree yields:" << endl;
+		myTree.inorderTraverse(myTree.getHead());
+		
+	}
+	return 0;
 };
